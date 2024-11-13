@@ -4,98 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sound Speed, Young's Modulus & Force Conversion Calculator</title>
-    <!-- Google Fonts link for Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            padding: 20px;
-            background-color: #f4f4f4;
-            margin: 0;
-        }
-        .logo-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .logo-container img {
-            max-width: 200px;
-            height: auto;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-        .calculator-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .calculator {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 300px; /* Default width for mobile */
-            box-sizing: border-box;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .form-group button {
-            width: 100%;
-            padding: 10px;
-            background-color: #A12D27;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: 600;
-            box-sizing: border-box;
-        }
-        .form-group button:hover {
-            background-color: #911D1A;
-        }
-        .result {
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        .note {
-            font-size: 14px;
-            font-style: italic;
-            color: #555;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        /* Media Query for larger screens */
-        @media (min-width: 768px) {
-            .calculator {
-                max-width: 600px; /* Wider width for desktop screens */
-            }
-            h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -164,14 +74,11 @@
     </div>
 </div>
 
-<script>
-    function calculateSpeed() {
-        let modulus = parseFloat(document.getElementById('modulus').value);
-        let density = parseFloat(document.getElementById('density').value);
+<script src="script.js"></script>
 
-        if (isNaN(modulus) || modulus <= 0) {
-            document.getElementById('result-speed').innerText = "Please enter a valid Young's Modulus (greater than 0).";
-            return;
+</body>
+</html>
+
         }
         if (isNaN(density) || density <= 0) {
             document.getElementById('result-speed').innerText = "Please enter a valid Density (greater than 0).";
