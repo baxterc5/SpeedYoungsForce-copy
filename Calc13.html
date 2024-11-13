@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound Speed, Young's Modulus & Force Conversion Calculator</title>
+    <!-- Google Fonts link for Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .calculator-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .calculator {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 300px; /* Default width for mobile */
+            box-sizing: border-box;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #A12D27;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            box-sizing: border-box;
+        }
+        .form-group button:hover {
+            background-color: #911D1A;
+        }
+        .result {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .note {
+            font-size: 14px;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        /* Media Query for larger screens */
+        @media (min-width: 768px) {
+            .calculator {
+                max-width: 600px; /* Wider width for desktop screens */
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Logo Section -->
+<div class="logo-container">
+    <img src="https://i.imgur.com/g7GPt46.png" alt="Logo">
+</div>
+
+<h1>Sound Speed, Young's Modulus & Force Conversion Calculator</h1>
+
+<div class="calculator-container">
+    <!-- Speed of Sound Calculator -->
+    <div class="calculator">
+        <h2>Speed of Sound in a Solid</h2>
+        <div class="form-group">
+            <label for="modulus">Young's Modulus (E) [Pa]</label>
+            <input type="number" id="modulus" placeholder="Enter Young's Modulus" required>
+        </div>
+        <div class="form-group">
+            <label for="density">Density (ρ) [g/in³]</label>
+            <input type="number" id="density" placeholder="Enter Density" required>
+        </div>
+        <div class="form-group">
+            <button onclick="calculateSpeed()">Calculate Speed of Sound</button>
+        </div>
+        <div class="result" id="result-speed"></div>
+    </div>
+
+    <!-- Force Conversion Calculator -->
+    <div class="calculator">
+        <h2>Force Conversion to Newtons</h2>
+        <p class="note">Pick one</p>
+        <div class="form-group">
+            <label for="force-lbf">Pound-force (lbf)</label>
+            <input type="number" id="force-lbf" placeholder="Enter lbf">
+        </div>
+        <div class="form-group">
+            <label for="force-kgf">Kilogram-force (kgf)</label>
+            <input type="number" id="force-kgf" placeholder="Enter kgf">
+        </div>
+        <div class="form-group">
+            <button onclick="convertToNewtons()">Convert to Newtons</button>
+        </div>
+        <div class="result" id="result-newtons"></div>
+    </div>
+
+    <!-- Young's Modulus Calculator (Stress/Strain) -->
+    <div class="calculator">
+        <h2>Young's Modulus Calculator</h2>
+        <div class="form-group">
+            <label for="force">Force (F) [N]</label>
+            <input type="number" id="force" placeholder="Enter Force" required>
+        </div>
+        <div class="form-group">
+            <label for="length">Original Length (L) [in]</label>
+            <input type="number" id="length" placeholder="Enter Original Length" required>
+        </div>
+        <div class="form-group">
+            <label for="deltaLength">Change in Length (ΔL) [in]</label>
+            <input type="number" id="deltaLength" placeholder="Enter Change in Length After Force Application" required>
+        </div>
+        <div class="form-group">
+            <button onclick="calculateYoungsModulus()">Calculate Young's Modulus</button>
+        </div>
+        <div class="result" id="result-modulus"></div>
+    </div>
+</div>
+
+<script>
+    function calculateSpeed() {
+        let modulus = parseFloat(document.getElementById('modulus').value);
+        let density = parseFloat(document.getElementById('density').value);
+
+        if (isNaN(modulus) || modulus <= 0) {
+            document.getElementById('result-speed').innerText = "Please enter a valid Young's Modulus (greater than 0).";
+            return;
+        }
+        if (isNaN(density) || density <= 0) {
+            document.getElementById('result-speed').innerText = "Please enter a valid Density (greater than 0).";
+            return;
+        }
+
+        let speed = Math.sqrt(modulus / density);
+        document.getElementById('result-speed').innerText = `Speed of Sound: ${speed.toFixed(2)} m/s`;
+    }
+
+    function calculateYoungsModulus() {
+        let force = parseFloat(document.getElementById('force').value);
+        let length = parseFloat(document.getElementById('length').value);
+        let deltaLength = parseFloat(document.getElementById('deltaLength').value);
+
+        if (isNaN(force) || force <= 0) {
+            document.getElementById('result-modulus').innerText = "Please enter a valid Force (greater than 0).";
+            return;
+        }
+        if (isNaN(length) || length <= 0) {
+            document.getElementById('result-modulus').innerText = "Please enter a valid Original Length (greater than 0).";
+            return;
+        }
+        if (isNaN(deltaLength) || deltaLength <= 0) {
+            document.getElementById('result-modulus').innerText = "Please enter a valid Change in Length (greater than 0).";
+            return;
+        }
+
+        // Calculate Strain (ΔL / L)
+        let strain = deltaLength / length;
+
+        // Approximate Stress (F / L, assuming unknown area)
+        let stress = force;
+
+        // Young's Modulus (E) = Stress / Strain
+        let modulus = stress / strain;
+        document.getElementById('result-modulus').innerText = `Young's Modulus: ${modulus.toFixed(2)} Pa`;
+    }
+
+    function convertToNewtons() {
+        let lbf = parseFloat(document.getElementById('force-lbf').value) || 0;
+        let kgf = parseFloat(document.getElementById('force-kgf').value) || 0;
+
+        let newtons = (lbf * 4.44822) + (kgf * 9.80665);
+        document.getElementById('result-newtons').innerText = `Total Force in Newtons: ${newtons.toFixed(2)} N`;
+    }
+</script>
+
+</body>
+</html>
